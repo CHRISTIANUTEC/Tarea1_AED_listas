@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+
 struct Nodo
 {
     int data;
@@ -21,6 +22,26 @@ public:
     T back()
     {
         return tail->data;
+    }
+
+    template <class T>
+    void push_front(T num)
+    {
+        Nodo *nodo = new Nodo;
+        nodo->data = num;
+        nodo->next = head;
+        head = nodo;
+    }
+    template <class T>
+    void push_back(T numero)
+    {
+        Nodo *nodo = new Nodo;
+        nodo->data = numero;
+        Nodo *temp = head;
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = nodo;
+        nodo->next = NULL;
     }
 };
 
@@ -76,6 +97,38 @@ int main()
     cout << "El primer elemento de la lista es: " << lista.front<int>() << endl;
     // Segunda pregunta
     cout << "El ultimo elemento de la lista es: " << lista.back<int>() << endl;
+    // Tercera pregunta
+    lista.push_front(4);
+
+    Nodo *temp = lista.head;
+    int i = 1;
+    while (temp != NULL)
+    {
+        if (i != 1)
+        {
+            cout << " , ";
+        }
+        cout << temp->data;
+
+        temp = temp->next;
+        i++;
+    }
+    cout<<endl;
+    // Cuarta pregunta
+    lista.push_back(77);
+    Nodo *temp2 = lista.head;
+    int k = 1;
+    while (temp2 != NULL)
+    {
+        if (k != 1)
+        {
+            cout << " , ";
+        }
+        cout << temp2->data;
+
+        temp2 = temp2->next;
+        k++;
+    }
 
     return 0;
 }
