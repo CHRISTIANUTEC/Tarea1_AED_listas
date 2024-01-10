@@ -12,7 +12,7 @@ private:
        Node(): next (nullptr) , prev(nullptr){}
         Node(T value) : data(value), next(nullptr), prev(nullptr) {}
     };
-    Node head;
+    Node* head;
     Node* tail;
     int nodes;
 
@@ -120,7 +120,7 @@ public:
 
     bool remove(int pos) {
         if (pos < 0 || pos >= size()) {
-            cout << "Posición fuera de rango"<< ednl;
+            cout << "Posición fuera de rango"<< endl;
         }
 
         if (pos == 0) {
@@ -144,7 +144,7 @@ public:
 
     T& operator[](int pos)  {
         if (pos < 0 || pos >= size()) {
-            cput << "Posición fuera de rango"<< endl;
+            cout << "Posición fuera de rango"<< endl;
         }
 
         Node* temp = head;
