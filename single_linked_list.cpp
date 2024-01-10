@@ -54,7 +54,7 @@ public:
     }
 
     template <class T>
-    T operator[](int pos){
+    T& operator[](int pos){
         Nodo *temp = head;
         int i = 0;
         while (i < pos){
@@ -217,6 +217,7 @@ int main() {
 
     cout << "Septima pregunta:" << endl;
     cout << "Retorna el elemento en la posicion indicada:" << endl << endl;
+    cout << lista.operator[]<int>(5) << endl<<endl;
 
     cout << "Octava pregunta:" << endl;
     cout << "Retorna si la lista esta vacia o no: (0 es falso y 1 verdadero)" << endl;
