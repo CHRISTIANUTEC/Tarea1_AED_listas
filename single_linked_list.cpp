@@ -1,40 +1,33 @@
 #include <iostream>
 using namespace std;
 
-struct Nodo
-{
+struct Nodo{
     int data;
     Nodo *next;
-    Nodo *prev;
 };
 
-class List
-{
+class List{
 public:
     Nodo *head;
     Nodo *tail;
     template <class T>
-    T front()
-    {
+    T front(){
         return head->data;
     }
     template <class T>
-    T back()
-    {
+    T back(){
         return tail->data;
     }
 
     template <class T>
-    void push_front(T num)
-    {
+    void push_front(T num){
         Nodo *nodo = new Nodo;
         nodo->data = num;
         nodo->next = head;
         head = nodo;
     }
     template <class T>
-    void push_back(T numero)
-    {
+    void push_back(T numero){
         Nodo *nodo = new Nodo;
         nodo->data = numero;
         Nodo *temp = head;
@@ -43,10 +36,109 @@ public:
         temp->next = nodo;
         nodo->next = NULL;
     }
+
+    template <class T>
+    void pop_front(){
+        Nodo *temp = head;
+        head = head->next;
+        delete temp;
+    }
+
+    template <class T>
+    void pop_back(){
+        Nodo *temp = head;
+        while (temp->next->next != NULL)
+            temp = temp->next;
+        delete temp->next;
+        temp->next = NULL;
+    }
+
+    template <class T>
+    T operator[](int pos){
+        Nodo *temp = head;
+        int i = 0;
+        while (i < pos){
+            temp = temp->next;
+            i++;
+        }
+        return temp->data;
+    }
+
+    bool empty(){
+        if (head == NULL)
+            return true;
+        else
+            return false;
+    }
+
+    int size(){
+        Nodo *temp = head;
+        int cont = 0;
+        while (temp != NULL){
+            temp = temp->next;
+            cont++;
+        }
+        return cont;
+    }
+
+    void clear(){
+        Nodo *temp = head;
+        while (head != NULL){
+            head = head->next;
+            delete temp;
+            temp = head;
+        }
+        cout<<"Se han eleminado todos los elementos de la lista"<<endl;
+    }
+
+    void imprimirLista(){
+        Nodo *temp = head;
+        while (temp != NULL){
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl<<endl;
+    }
+
+    void sort(){
+        Nodo *temp = head;
+        Nodo *temp2 = head;
+        int aux;
+        while (temp != NULL){
+            while (temp2 != NULL){
+                if (temp->data < temp2->data){
+                    aux = temp->data;
+                    temp->data = temp2->data;
+                    temp2->data = aux;
+                }
+                temp2 = temp2->next;
+            }
+            temp = temp->next;
+            temp2 = temp;
+        }
+    }
+
+    void reverse(){
+        Nodo *current = head;
+        Nodo *next = nullptr;
+        Nodo *newHead = nullptr;
+
+        while (current != nullptr) {
+            next = current->next;
+            current->next = newHead;
+            newHead = current;
+            current = next;
+        }
+
+        head = newHead;
+    }
+
 };
 
-int main()
-{
+
+
+
+int main() {
     List lista;
     lista.head = nullptr;
     lista.tail = nullptr;
@@ -54,81 +146,106 @@ int main()
     Nodo *nodo1 = new Nodo;
     nodo1->data = 5;
     nodo1->next = nullptr;
-    nodo1->prev = nullptr;
     lista.head = nodo1;
     lista.tail = nodo1;
 
     Nodo *nodo2 = new Nodo;
     nodo2->data = 22;
     nodo2->next = nullptr;
-    nodo2->prev = lista.tail;
     lista.tail->next = nodo2;
     lista.tail = nodo2;
 
     Nodo *nodo3 = new Nodo;
     nodo3->data = 18;
     nodo3->next = nullptr;
-    nodo3->prev = lista.tail;
     lista.tail->next = nodo3;
     lista.tail = nodo3;
 
     Nodo *nodo4 = new Nodo;
     nodo4->data = 13;
     nodo4->next = nullptr;
-    nodo4->prev = lista.tail;
     lista.tail->next = nodo4;
     lista.tail = nodo4;
 
     Nodo *nodo5 = new Nodo;
     nodo5->data = 7;
     nodo5->next = nullptr;
-    nodo5->prev = lista.tail;
     lista.tail->next = nodo5;
     lista.tail = nodo5;
 
     Nodo *nodo6 = new Nodo;
     nodo6->data = 12;
     nodo6->next = nullptr;
-    nodo6->prev = lista.tail;
     lista.tail->next = nodo6;
     lista.tail = nodo6;
 
+    //Imprime el arreglo original
+    cout << "Arreglo original: (Forward List)" << endl;
+    lista.imprimirLista();
+
     // Primera pregunta
-    cout << "El primer elemento de la lista es: " << lista.front<int>() << endl;
+    cout << "Primera pregunta" << endl;
+    cout << "El primer elemento de la lista es: " << lista.front<int>() << endl << endl;
     // Segunda pregunta
-    cout << "El ultimo elemento de la lista es: " << lista.back<int>() << endl;
+    cout << "Segunda pregunta" << endl;
+    cout << "El ultimo elemento de la lista es: " << lista.back<int>() << endl << endl;
     // Tercera pregunta
+    cout << "Tercera pregunta" << endl;
+    cout << "Agrega un elemento al comienzo de la lista:" << endl;
     lista.push_front(4);
 
-    Nodo *temp = lista.head;
-    int i = 1;
-    while (temp != NULL)
-    {
-        if (i != 1)
-        {
-            cout << " , ";
-        }
-        cout << temp->data;
+    lista.imprimirLista();
 
-        temp = temp->next;
-        i++;
-    }
-    cout<<endl;
     // Cuarta pregunta
+    cout << "Cuarta pregunta" << endl;
+    cout << "Agrega un elemento al final de la lista:" << endl;
     lista.push_back(77);
-    Nodo *temp2 = lista.head;
-    int k = 1;
-    while (temp2 != NULL)
-    {
-        if (k != 1)
-        {
-            cout << " , ";
-        }
-        cout << temp2->data;
 
-        temp2 = temp2->next;
-        k++;
-    }
+    lista.imprimirLista();
+
+    cout << "Quinta pregunta:" << endl;
+    cout << "Remueve el elemento del comienzo de la lista:" << endl;
+    lista.pop_front<int>();
+
+    lista.imprimirLista();
+
+    cout << "Sexta pregunta:" << endl;
+    cout << "Remueve el elemento del final de la lista:" << endl;
+    lista.pop_back<int>();
+
+    lista.imprimirLista();
+
+    cout << "Septima pregunta:" << endl;
+    cout << "Retorna el elemento en la posicion indicada:" << endl << endl;
+
+    cout << "Octava pregunta:" << endl;
+    cout << "Retorna si la lista esta vacia o no: (0 es falso y 1 verdadero)" << endl;
+    lista.imprimirLista();
+    cout << "La lista esta vacia? : " << lista.empty() << endl << endl;
+
+    cout << "Novena pregunta:" << endl;
+    cout << "Retorna el tamano de la lista:" << endl;
+    cout << "Lista actual: " << endl;
+    lista.imprimirLista();
+    cout << "El tamano de la lista es: " << lista.size() << endl << endl;
+
+    cout << "Onceava pregunta:" << endl;
+    cout << "Implemente un algoritmo de ordenacion con listas enlazadas:" << endl;
+    cout<<"Lista ordenada (de mayor a menor): "<<endl;
+    lista.sort();
+    lista.imprimirLista();
+
+    cout<<"Doceava pregunta:"<<endl;
+    cout<<"Revierte la lista:"<<endl;
+    lista.reverse();
+    lista.imprimirLista();
+
+    //Se ha colocado esta pregunta para poder constestar las demás preguntas.
+    //Para al final utilizar el borrado completo de la lista
+    cout << "Decima pregunta:" << endl;
+    cout << "Elimina todos los elementos de la lista:" << endl;
+    lista.clear();
+    cout << "La lista esta vacia? : " << lista.empty() << endl << endl;
 
     return 0;
 }
