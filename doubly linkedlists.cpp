@@ -186,4 +186,4 @@ public:
         head = prev;
     }
 
-}:
+};
